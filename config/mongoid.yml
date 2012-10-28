@@ -1,0 +1,18 @@
+development:
+  sessions:
+    default:
+      database: ydn_working
+      hosts:
+        - localhost:27017
+production:
+  sessions:
+    default:
+      database: ydn
+      hosts:
+        - localhost:27017
+development2:
+  sessions:
+    default:
+      database: ydn_working2
+      hosts:
+        - localhost:27017
