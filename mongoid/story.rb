@@ -109,6 +109,7 @@ class Story
   field :wp_site, type: String, default: "main"
   field :has_inlines, type: Boolean, default: false
   field :computed_bylines, type: Array, default: []
+  field :el_url, type: String, default: []
   
   def bylines
     #build an array of bylines calls and then remove all the nils

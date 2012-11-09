@@ -3,6 +3,7 @@ require File.expand_path(File.join( 'tables', 'categories.rb') )
 require File.expand_path(File.join( 'tables', 'audioclips.rb') )
 require 'set'
 require 'nokogiri'
+require 'time'
 
 #UTILITY METHODS
 def extract_youtube_url url
@@ -31,12 +32,12 @@ class DataProcessor
 
 
   def process!
-   build_complete_users_table
+#   build_complete_users_table
    run_main_story_loop
-   mark_gallery_photos
-   delete_duplicate_photos
-   set_default_sites
-   run_main_video_loop
+#   mark_gallery_photos
+#   delete_duplicate_photos
+#   set_default_sites
+#   run_main_video_loop
   end
 
   def print_header(val)
@@ -124,15 +125,23 @@ class DataProcessor
 
     i = 0 
     Story.each do |s|
-      load_wp_categories s
-      process_lead_photos s
-      transform_inlines s
-      s.el_story.gsub!(/<(\/)?story>/,"")
+#      load_wp_categories s
+#      process_lead_photos s
+#      transform_inlines s
+      generate_legacy_url s
+#      s.el_story.gsub!(/<(\/)?story>/,"")
       
       s.save!
       i += 1
       print_record_count i
     end
+  end
+
+  def generate_legacy_url(s)
+    #uses the pubdate and slug fields to create the ellington url
+    pub = Time.parse(s.el_pub_date)
+    s.el_url = pub.strftime("news/%Y/%b/%d/").downcase
+    s.el_url += s.el_slug
   end
 
   def mark_gallery_photos
@@ -285,7 +294,7 @@ class InlineRenderer
     @id = cur_node["id"] || ""
     @title = cur_node["title"] || ""
 
-    @story_id = s.el_id
+    @story_id = story.el_id
     @story = story
 
     @cur_node = cur_node
