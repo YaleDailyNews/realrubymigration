@@ -32,12 +32,12 @@ class DataProcessor
 
 
   def process!
-#   build_complete_users_table
+   build_complete_users_table
    run_main_story_loop
-#   mark_gallery_photos
-#   delete_duplicate_photos
-#   set_default_sites
-#   run_main_video_loop
+   mark_gallery_photos
+   delete_duplicate_photos
+   set_default_sites
+   run_main_video_loop
   end
 
   def print_header(val)
@@ -125,11 +125,11 @@ class DataProcessor
 
     i = 0 
     Story.each do |s|
-#      load_wp_categories s
-#      process_lead_photos s
-#      transform_inlines s
+      load_wp_categories s
+      process_lead_photos s
+      transform_inlines s
       generate_legacy_url s
-#      s.el_story.gsub!(/<(\/)?story>/,"")
+      s.el_story.gsub!(/<(\/)?story>/,"")
       
       s.save!
       i += 1
